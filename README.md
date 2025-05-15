@@ -1,162 +1,125 @@
-# Build the application
-.\mvnw.cmd clean install
+# Auto Interview System
 
-# Run the application
-.\mvnw.cmd spring-boot:run# Build the application
-.\mvnw.cmd clean install
-
-# Run the application
-.\mvnw.cmd spring-boot:run# Automatic Interview Platform
-
-A comprehensive platform for conducting automated technical interviews, including coding assessments, MCQs, and video interviews.
+A comprehensive platform for conducting automated and live technical interviews. The system supports multiple question types, automated evaluation, and detailed reporting.
 
 ## Features
 
-1. User Management
-   - Role-based access (Admin, Recruiter, Candidate)
-   - JWT-based authentication
-   - Secure password handling
+- **User Management**
+  - Admin, Recruiter, and Candidate roles
+  - JWT-based authentication
+  - Role-based access control
 
-2. Question Bank
-   - MCQ questions
-   - Coding questions with test cases
-   - Video/Audio questions
-   - Difficulty levels
-   - Language-specific coding problems
+- **Question Bank**
+  - Multiple Choice Questions (MCQs)
+  - Coding Problems
+  - Video/Audio Questions
+  - Question tagging and difficulty levels
+  - Question bank organization
 
-3. Interview Process
-   - Automated MCQ tests
-   - Coding challenges with Judge0 API integration
-   - Video/Audio responses
-   - Real-time evaluation
-
-4. Additional Features (Coming Soon)
-   - Interview scheduling
-   - Calendar integration
-   - Result analytics
-   - PDF report generation
-   - Email/SMS notifications
+- **Interview Management**
+  - Schedule interviews
+  - Auto-conducted tests
+  - Live interviews
+  - Pre-recorded video/audio questions
+  - Real-time evaluation
+  - Detailed feedback and scoring
 
 ## Tech Stack
 
-- Backend: Spring Boot 3.1.0
-- Security: Spring Security with JWT
-- Database: PostgreSQL
-- API Documentation: OpenAPI (Swagger)
-- Frontend (Planned): React/Angular
+- **Backend**
+  - Java 17
+  - Spring Boot 3.1.0
+  - Spring Security with JWT
+  - JPA/Hibernate
+  - PostgreSQL
 
 ## Prerequisites
 
-1. Java 17 or higher
-2. PostgreSQL 12 or higher
-3. Maven (or use included Maven wrapper)
+- Java 17 or higher
+- PostgreSQL 12 or higher
+- Maven 3.6 or higher
 
-## Setup Instructions
+## Setup
 
-1. Clone the repository
-
-2. Create PostgreSQL database:
-   ```sql
-   CREATE DATABASE autointerview;
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/auto-interview-system.git
+   cd auto-interview-system
    ```
 
-3. Update database configuration in `src/main/resources/application.properties`:
-   ```properties
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
-   ```
+2. Configure the database:
+   - Create a PostgreSQL database named `autointerview`
+   - Update `src/main/resources/application.yml` with your database credentials
+
+3. Configure email settings:
+   - Update `src/main/resources/application.yml` with your email credentials
 
 4. Build the project:
    ```bash
-   ./mvnw clean install
+   mvn clean install
    ```
 
 5. Run the application:
    ```bash
-   ./mvnw spring-boot:run
-   ```
-
-## API Documentation
-
-Once the application is running, access the Swagger UI at:
-- http://localhost:8080/swagger-ui.html
-
-API documentation is available at:
-- http://localhost:8080/api-docs
-
-## Project Structure
-
-```
-src/
-├── main/
-│   ├── java/
-│   │   └── com/autointerview/
-│   │       ├── config/          # Configuration classes
-│   │       ├── controller/      # REST endpoints
-│   │       ├── model/          # Entity classes
-│   │       ├── repository/     # Data access layer
-│   │       ├── service/        # Business logic
-│   │       └── security/       # Security configuration
-│   └── resources/
-│       └── application.properties
-```
-
-- User Management (Admin/Recruiter/Candidate)
-- Question Bank Management
-- Interview Scheduling
-- Live & Automated Interviews
-- Code Editor with Compilation
-- Automated Evaluation
-- Result Analytics
-- Email/SMS Notifications
-
-## Tech Stack
-
-### Backend
-- Java 17
-- Spring Boot 3.1.0
-- Spring Security
-- MySQL Database
-- JPA/Hibernate
-- JWT Authentication
-
-### Frontend (Planned)
-- React/Angular
-- Code Editor Integration (Ace/Monaco)
-
-## Setup Instructions
-
-1. Prerequisites:
-   - Java 17 or higher
-   - Maven
-   - MySQL
-
-2. Database Setup:
-   - Create a MySQL database named `autointerview`
-   - Update database credentials in `application.properties`
-
-3. Build & Run:
-   ```bash
-   mvn clean install
    mvn spring-boot:run
    ```
 
-4. API Documentation will be available at:
-   - http://localhost:8080/swagger-ui.html (after implementation)
+The application will be available at `http://localhost:8080`
 
-## Project Structure
+## API Documentation
+
+Once the application is running, you can access the API documentation at:
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI Docs: `http://localhost:8080/api-docs`
+
+## API Endpoints
+
+### Authentication
+- POST `/api/v1/auth/register` - Register a new user
+- POST `/api/v1/auth/login` - Login and get JWT tokens
+- POST `/api/v1/auth/refresh-token` - Refresh access token
+- POST `/api/v1/auth/logout` - Logout and invalidate tokens
+
+### Question Banks
+- POST `/api/v1/question-banks` - Create a question bank
+- GET `/api/v1/question-banks` - Get all question banks
+- GET `/api/v1/question-banks/{id}` - Get a specific question bank
+- PUT `/api/v1/question-banks/{id}` - Update a question bank
+- DELETE `/api/v1/question-banks/{id}` - Delete a question bank
+
+### Questions
+- POST `/api/v1/questions` - Create a question
+- GET `/api/v1/questions` - Get all questions
+- GET `/api/v1/questions/{id}` - Get a specific question
+- PUT `/api/v1/questions/{id}` - Update a question
+- DELETE `/api/v1/questions/{id}` - Delete a question
+
+### Interviews
+- POST `/api/v1/interviews` - Schedule an interview
+- GET `/api/v1/interviews` - Get all interviews
+- GET `/api/v1/interviews/{id}` - Get a specific interview
+- PUT `/api/v1/interviews/{id}` - Update an interview
+- DELETE `/api/v1/interviews/{id}` - Cancel an interview
+- POST `/api/v1/interviews/{id}/start` - Start an interview
+- POST `/api/v1/interviews/{id}/end` - End an interview
+- POST `/api/v1/interviews/{id}/feedback` - Submit interview feedback
+
+## Security
+
+The application uses JWT (JSON Web Tokens) for authentication and authorization. All endpoints except `/api/v1/auth/**` require a valid JWT token in the Authorization header:
 
 ```
-src/
-├── main/
-│   ├── java/
-│   │   └── com/autointerview/
-│   │       ├── config/      # Configuration classes
-│   │       ├── controller/  # REST endpoints
-│   │       ├── model/       # Entity classes
-│   │       ├── repository/  # Data access layer
-│   │       ├── service/     # Business logic
-│   │       └── security/    # Security configuration
-│   └── resources/
-│       └── application.properties
+Authorization: Bearer your_jwt_token_here
 ```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
